@@ -20,8 +20,8 @@ TARGET_POINT = np.array([0.18887618, 0.00295324, 0.03638198])
 
 import glob
 
-traj_group_open = glob.glob(os.environ['DATA'] + '/robonetv2/toykitchen_fixed_cam/toykitchen1/open_microwave/*/raw/traj_group*/traj*')
-traj_group_close = glob.glob(os.environ['DATA'] + '/robonetv2/toykitchen_fixed_cam/toykitchen1/close_microwave/*/raw/traj_group*/traj*')
+traj_group_open = glob.glob(os.environ['DATA'] + '/robonetv2/tk1_microwave_targetdemos/toykitchen1/open_1109/*/raw/traj_group*/traj*')
+traj_group_close = glob.glob(os.environ['DATA'] + '/robonetv2/toykitchen_fixed_cam_11_16_22/toykitchen1/close_microwave/*/raw/traj_group*/traj*')
 traj_group_sushi = glob.glob(os.environ['DATA'] + '/robonetv2/toykitchen_fixed_cam/toykitchen2/put_sushi_in_pot_cardboard_fence/*/raw/traj_group*/traj*')
 traj_group_sushi_out = glob.glob(os.environ['DATA'] + '/robonetv2/toykitchen_fixed_cam/toykitchen2/take_sushi_out_of_pot_cardboard_fence/*/raw/traj_group*/traj*')
 traj_group_bowlplate = glob.glob(os.environ['DATA'] + '/robonetv2/toykitchen_fixed_cam/toykitchen2/put_bowl_on_plate_cardboard_fence/*/raw/traj_group*/traj*')
@@ -61,7 +61,8 @@ start_transforms = dict(
 
     openmicrowave = [os.environ['DATA'] + '/robonetv2/toykitchen_fixed_cam/toykitchen1/open_microwave/2021-12-01_16-14-39/raw/traj_group0/traj0', 7],
     closemicrowave = [os.environ['DATA'] + '/robonetv2/toykitchen_fixed_cam/toykitchen1/close_microwave/2021-12-02_12-14-59/raw/traj_group0/traj1', 0],
-    openmicrowave_sampled = [traj_group_open, 10],
+    openmicrowave_sampled = [traj_group_open, (5, 10)],
+    closemicrowave_sampled = [traj_group_close, (5, 10)],
     # openclosemicrowave_sampled = {3: [traj_group_open, 10], 1:[traj_group_close, (10, 16)]},  # use without aliasing
     openclosemicrowave_sampled = {1: [traj_group_open, 10], 0:[traj_group_close, (10, 16)]},  # with aliasing
     reaching = [os.environ['DATA'] + '/robonetv2/online_datacollection/online_reaching/berkeley/toykitchen1/pix_policy_std0.3_initscale0.0_collectdata/2022-04-25_18-10-03/raw/traj_group0/traj0', 0],

@@ -83,7 +83,7 @@ def eval(policy, env, num_episodes=1):
 
 if __name__ == '__main__':
     argparser = argparse.ArgumentParser()
-    argparser.add_argument('--path', type=str, default='/home/robonetv2/code/RT-1 on Bridge/000136640')
+    argparser.add_argument('--path', type=str, default='/home/robonetv2/code/RT-1 on Bridge/chkpts/000125440-20230214T022547Z-001/000125440')
     argparser.add_argument('--start_transform', type=str, default='toykitchen1_put_sushi_on_plate')
     argparser.add_argument('--task', type=str, default='put_sushi_on_plate')
     argparser.add_argument('--num_tasks', type=int, default=0)
