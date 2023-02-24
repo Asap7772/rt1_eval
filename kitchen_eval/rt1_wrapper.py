@@ -17,6 +17,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 
 from collections import defaultdict
+from gym.spaces import Box
 
 def stack_observations(observations):
     print('keys', observations[0].keys())
@@ -33,6 +34,20 @@ def stack_observations(observations):
     del new_dict
     
     return stacked_dict
+
+
+def unnormalize_actions(actions):
+    action_space = Box(np.asarray([-0.05, -0.05, -0.05, -0.25, -0.25, -0.25, 0.]), np.asarray([0.05, 0.05, 0.05, 0.25, 0.25, 0.25, 1.0]), dtype=np.float32)
+    low, high = action_space.low, action_space.high
+    
+    actions = actions.squeeze()
+    actions_rescaled = (actions + 1) / 2 * (high - low) + low
+
+    if np.any(actions_rescaled > high):
+        print('action bounds violated: ', actions)
+    if np.any(actions_rescaled < low):
+        print('action bounds violated: ', actions)
+    return actions_rescaled
 
 def normalize_task_name(task_name):
 
@@ -116,7 +131,13 @@ class RT1WrapperPolicy():
         action = policy_step.action
         self.policy_state = policy_step.state
         
-        return tfa_action_to_bridge_action(action)
+        unnorm_action = tfa_action_to_bridge_action(action)
+        action = unnormalize_actions(unnorm_action)
+        
+        print('action', action, np.linalg.norm(action, 2))
+        print('unnorm_action', unnorm_action, np.linalg.norm(unnorm_action, 2))
+        
+        return action
         
         
         

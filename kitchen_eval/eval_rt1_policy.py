@@ -7,6 +7,7 @@ from widowx_real_env import *
 from rt1_wrapper import RT1WrapperPolicy
 import time
 
+# old tensorflow version : 2.9.1
 TARGET_POINT = np.array([0.28425417, 0.04540814, 0.07545623])  # mean
 
 class AttrDict(defaultdict):
@@ -49,14 +50,17 @@ def eval(policy, env, num_episodes=1):
     
     for i in range(num_episodes):
         env.start()  # this sets the correct moving time for the robot
+        print("env started")
         last_tstep = time.time()
         step_duration = 0.2
         
         obs, done = env.reset(), False
+        print("env reset!")
         total_reward = 0.0
         
         print(f'Episode: {i}')       
         t = 0
+        print("entering while loop")
         while not done:
             obs_so_far.append(obs)
             if time.time() > last_tstep + step_duration:
@@ -83,9 +87,12 @@ def eval(policy, env, num_episodes=1):
 
 if __name__ == '__main__':
     argparser = argparse.ArgumentParser()
-    argparser.add_argument('--path', type=str, default='/home/robonetv2/code/RT-1 on Bridge/chkpts/000125440-20230214T022547Z-001/000125440')
-    argparser.add_argument('--start_transform', type=str, default='toykitchen1_put_sushi_on_plate')
-    argparser.add_argument('--task', type=str, default='put_sushi_on_plate')
+    argparser.add_argument('--path', type=str, default='/home/robonetv2/code/RT-1 on Bridge/chkpts/000222320')
+    #closemicrowave
+    argparser.add_argument('--start_transform', type=str, default='closemicrowave_sampled')
+    argparser.add_argument('--task', type=str, default='close_microwave')
+    # argparser.add_argument('--start_transform', type=str, default='toykitchen1_put_sushi_on_plate')
+    # argparser.add_argument('--task', type=str, default='put_sushi_on_plate')
     argparser.add_argument('--num_tasks', type=int, default=0)
     argparser.add_argument('--num_trajectory', type=int, default=10)
     args = argparser.parse_args()
@@ -99,5 +106,5 @@ if __name__ == '__main__':
     from widowx_real_env import JaxRLWidowXEnv
     env_params = get_env_params(args.start_transform)
     env = JaxRLWidowXEnv(env_params, num_tasks=args.num_tasks)
-    
+    print("env loaded")
     eval(policy, env, num_episodes=args.num_trajectory)
