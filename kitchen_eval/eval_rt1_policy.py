@@ -36,7 +36,7 @@ def get_env_params(start_transform):
     }
     return env_params
 
-def eval(policy, env, num_episodes=1):
+def eval(policy, env, num_episodes=1, episode_length=40):
     """
     Evaluate a policy.
     :param policy: policy to be evaluated
@@ -49,19 +49,16 @@ def eval(policy, env, num_episodes=1):
     obs_so_far = []
     
     for i in range(num_episodes):
-        env.start()  # this sets the correct moving time for the robot
-        print("env started")
         last_tstep = time.time()
         step_duration = 0.2
         
         obs, done = env.reset(), False
-        print("env reset!")
         total_reward = 0.0
+        env.start()  # this sets the correct moving time for the robot
         
         print(f'Episode: {i}')       
         t = 0
-        print("entering while loop")
-        while not done:
+        while True:
             obs_so_far.append(obs)
             if time.time() > last_tstep + step_duration:
                 if (time.time() - last_tstep) > step_duration * 1.05:
@@ -81,7 +78,10 @@ def eval(policy, env, num_episodes=1):
                 tstamp_return_obs = last_tstep + step_duration
                 obs, reward, done, _ = env.step({'action':action, 'tstamp_return_obs':tstamp_return_obs})
                 total_reward += reward
-                rewards.append(total_reward)   
+                rewards.append(total_reward) 
+                if done or t == episode_length:
+                    break
+        env.move_to_neutral()
                 
     return np.mean(rewards)
 
