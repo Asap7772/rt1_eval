@@ -65,6 +65,9 @@ class RT1WrapperPolicy():
         physical_devices = tf.config.list_physical_devices('GPU')
         try:
             tf.config.experimental.set_memory_growth(physical_devices[0], True)
+            tf.config.experimental.set_memory_growth(physical_devices[1], True)
+            tf.config.experimental.set_memory_growth(physical_devices[2], True)
+            tf.config.experimental.set_memory_growth(physical_devices[3], True)
         except:
         # Invalid device or cannot modify virtual devices once initialized.
             pass
@@ -74,35 +77,40 @@ class RT1WrapperPolicy():
             load_specs_from_pbtxt=True,
             use_tf_function=True)
         
+        # '''
+        # 'gripper_closed':
+        #         np.zeros(shape=(1), dtype=np.float32),
+        #     'height_to_bottom':
+        #         np.zeros(shape=(1), dtype=np.float32),
+        #     'base_pose_tool_reached':
+        #         np.zeros(shape=(7), dtype=np.float32),
+        #     'workspace_bounds':
+        #         np.zeros(shape=(3, 3), dtype=np.float32),
+        #     'orientation_box':
+        #         np.zeros(shape=(2, 3), dtype=np.float32),
+        #     'orientation_start':
+        #         np.zeros(shape=(4), dtype=np.float32),
+        #     'src_rotation':
+        #         np.zeros(shape=(4), dtype=np.float32),
+        #     'robot_orientation_positions_box':
+        #         np.zeros(shape=(3, 3), dtype=np.float32),
+        #     'vector_to_go':
+        #         np.zeros(shape=(3), dtype=np.float32),
+        #     'rotation_delta_to_go':
+        #         np.zeros(shape=(3), dtype=np.float32),
+        #     'gripper_closedness_commanded':
+        #         np.zeros(shape=(1), dtype=np.float32),
+        
+        
+        
+        # '''
         self.base_observation = {
             'image':
                 np.zeros(shape=(256, 320, 3), dtype=np.uint8),
             'natural_language_embedding':
                 np.zeros(shape=(512), dtype=np.float32),
-            'gripper_closed':
-                np.zeros(shape=(1), dtype=np.float32),
-            'height_to_bottom':
-                np.zeros(shape=(1), dtype=np.float32),
-            'base_pose_tool_reached':
-                np.zeros(shape=(7), dtype=np.float32),
-            'workspace_bounds':
-                np.zeros(shape=(3, 3), dtype=np.float32),
-            'orientation_box':
-                np.zeros(shape=(2, 3), dtype=np.float32),
-            'orientation_start':
-                np.zeros(shape=(4), dtype=np.float32),
-            'src_rotation':
-                np.zeros(shape=(4), dtype=np.float32),
-            'robot_orientation_positions_box':
-                np.zeros(shape=(3, 3), dtype=np.float32),
             'natural_language_instruction':
-                np.zeros(shape=(), dtype=str),
-            'vector_to_go':
-                np.zeros(shape=(3), dtype=np.float32),
-            'rotation_delta_to_go':
-                np.zeros(shape=(3), dtype=np.float32),
-            'gripper_closedness_commanded':
-                np.zeros(shape=(1), dtype=np.float32),
+                np.zeros(shape=(), dtype=str)
         }
         
         embed = hub.load('https://tfhub.dev/google/universal-sentence-encoder-large/5')

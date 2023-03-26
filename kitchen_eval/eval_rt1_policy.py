@@ -28,7 +28,7 @@ def get_env_params(start_transform):
         'action_clipping': 'xyz',
         'catch_environment_except': True,
         'target_point': TARGET_POINT,
-        'add_states': variant.add_states,
+        'add_states': True,
         'from_states': variant.from_states,
         'reward_type': variant.reward_type,
         'start_transform': None if variant.start_transform == '' else start_transforms[start_transform],
@@ -78,7 +78,7 @@ def eval(policy, env, num_episodes=1, episode_length=40):
                 tstamp_return_obs = last_tstep + step_duration
                 obs, reward, done, _ = env.step({'action':action, 'tstamp_return_obs':tstamp_return_obs})
                 total_reward += reward
-                rewards.append(total_reward) 
+                rewards.append(total_reward)   
                 if done or t == episode_length:
                     break
         env.move_to_neutral()
@@ -87,13 +87,13 @@ def eval(policy, env, num_episodes=1, episode_length=40):
 
 if __name__ == '__main__':
     argparser = argparse.ArgumentParser()
-    argparser.add_argument('--path', type=str, default='/home/robonetv2/code/RT-1 on Bridge/chkpts/000222320')
+    argparser.add_argument('--path', type=str, default='/home/robonetv2/code/rt1_eval/chkpts/000041440_xid52982508')
     #closemicrowave
-    argparser.add_argument('--start_transform', type=str, default='closemicrowave_sampled')
-    argparser.add_argument('--task', type=str, default='close_microwave')
+    argparser.add_argument('--start_transform', type=str, default='openmicrowave_sampled')
+    argparser.add_argument('--task', type=str, default='openmicrowave')
     # argparser.add_argument('--start_transform', type=str, default='toykitchen1_put_sushi_on_plate')
     # argparser.add_argument('--task', type=str, default='put_sushi_on_plate')
-    argparser.add_argument('--num_tasks', type=int, default=0)
+    argparser.add_argument('--num_tasks', type=int, default=1)
     argparser.add_argument('--num_trajectory', type=int, default=10)
     args = argparser.parse_args()
     

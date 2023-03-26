@@ -136,7 +136,8 @@ def get_env_params(variant):
 
 class JaxRLWidowXEnv(WidowXEnv):
     def __init__(self, env_params=None, task_id=None, num_tasks=None, fixed_image_size=128,
-                 control_viewpoint=0 # used for reward function
+                 control_viewpoint=0,# used for reward function
+                 is_eval=False
                  ):
 
         super().__init__(env_params)
@@ -158,6 +159,7 @@ class JaxRLWidowXEnv(WidowXEnv):
         self.requires_timed = True
         self.do_render = True
         self.traj_counter = 0
+        self.eval=is_eval
 
     def _default_hparams(self):
         from widowx_envs.utils.multicam_server_rospkg.src.topic_utils import IMTopic
@@ -228,7 +230,8 @@ class JaxRLWidowXEnv(WidowXEnv):
     def move_to_startstate(self, start_state=None):
         # sel_task = self.select_task_from_reward_function()
         paths, tstep = self._hp.start_transform
-
+        if self.eval:
+            tstep = 0
         successful = False
         itrial = 0
         print('entering move to startstate loop.')
@@ -242,7 +245,7 @@ class JaxRLWidowXEnv(WidowXEnv):
                     print(f'sampling random start state from {len(paths)} paths ...')
                     sel_path = random.choice(paths)
                     if isinstance(tstep, int):
-                        sel_tstep = np.random.randint(0, tstep)
+                        sel_tstep = np.random.randint(0, tstep+1)
                     elif isinstance(tstep, tuple) and len(tstep) == 2:
                         sel_tstep = np.random.randint(tstep[0], tstep[1])
                     else:
@@ -428,6 +431,5 @@ class BridgeDataJaxRLVRWidowXReward(BridgeDataJaxRLWidowXRewardAdapter, VR_JaxRL
     def __init__(self, env_params=None, reward_function=None, task_id=None, num_tasks=None, fixed_image_size=128, all_tasks=None, task_id_mapping=None):
         super().__init__(env_params=env_params, reward_function=reward_function, task_id=task_id, num_tasks=num_tasks, fixed_image_size=fixed_image_size,
                          all_tasks=all_tasks, task_id_mapping=task_id_mapping)
-
 
 
