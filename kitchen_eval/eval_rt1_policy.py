@@ -78,7 +78,7 @@ def eval(policy, env, num_episodes=1, episode_length=40):
                 tstamp_return_obs = last_tstep + step_duration
                 obs, reward, done, _ = env.step({'action':action, 'tstamp_return_obs':tstamp_return_obs})
                 total_reward += reward
-                rewards.append(total_reward)   
+                rewards.append(total_reward) 
                 if done or t == episode_length:
                     break
         env.move_to_neutral()
