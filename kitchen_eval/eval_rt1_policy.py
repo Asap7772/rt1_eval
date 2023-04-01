@@ -87,12 +87,14 @@ def eval(policy, env, num_episodes=1, episode_length=40):
 
 if __name__ == '__main__':
     argparser = argparse.ArgumentParser()
-    argparser.add_argument('--path', type=str, default='/home/robonetv2/code/rt1_eval/chkpts/000041440_xid52982508')
+    
+    #/home/raid/trainingdata/anikait_exps/03_28_quanevals/xid_54556479/000211960/checkpoint
+    argparser.add_argument('--path', type=str, default='/home/robonetv2/code/rt1_eval/03_28_quanevals/xid_54556479/000211960')
     #closemicrowave
-    argparser.add_argument('--start_transform', type=str, default='openmicrowave_sampled')
-    argparser.add_argument('--task', type=str, default='openmicrowave')
-    # argparser.add_argument('--start_transform', type=str, default='toykitchen1_put_sushi_on_plate')
-    # argparser.add_argument('--task', type=str, default='put_sushi_on_plate')
+    # argparser.add_argument('--start_transform', type=str, default='closemicrowave_sampled')
+    # argparser.add_argument('--task', type=str, default='closemicrowave')
+    argparser.add_argument('--start_transform', type=str, default='toykitchen1_put_sushi_on_plate')
+    argparser.add_argument('--task', type=str, default='put_sushi_on_plate')
     argparser.add_argument('--num_tasks', type=int, default=1)
     argparser.add_argument('--num_trajectory', type=int, default=10)
     args = argparser.parse_args()

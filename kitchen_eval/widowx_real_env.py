@@ -33,7 +33,10 @@ traj_group_knife_pot = glob.glob(os.environ['DATA'] + '/robonetv2/toykitchen_fix
 traj_group_croissant_pot = glob.glob(os.environ['DATA'] + '/robonetv2/toykitchen_fixed_cam_targetdomain/berkeley/toykitchen6/take_croissant_out_of_pot/2022-06-15_13-38-29/raw/traj_group*/traj*')
 traj_group_pot_sink = glob.glob(os.environ['DATA'] + '/robonetv2/toykitchen_fixed_cam/berkeley/toykitchen1/put_pot_in_sink/2021-06-08_20-18-29/raw/traj_group*/traj*')
 traj_group_take_carrot_plate = glob.glob(os.environ['DATA'] + '/robonetv2/toykitchen_fixed_cam/berkeley/toykitchen1/take_carrot_off_plate/*/raw/traj_group*/traj*')
-traj_group_put_sushi_on_plate = glob.glob(os.environ['DATA'] + '/robonetv2/toykitchen_fixed_cam/berkeley/toykitchen1/put_sushi_on_plate/*/raw/traj_group*/traj*')
+#traj_group_put_sushi_on_plate = glob.glob(os.environ['DATA'] + '/robonetv2/toykitchen_fixed_cam/berkeley/toykitchen1/put_sushi_on_plate/*/raw/traj_group*/traj*')
+traj_group_put_sushi_on_plate = glob.glob('/home/robonetv2/code/rt1_eval/put_sushi_on_plate/*/raw/traj_group*/traj*')
+
+
 
 traj_group_tk6_task1 = glob.glob(os.environ['DATA'] + '/robonetv2/toykitchen_fixed_cam_targetdomain/berkeley/toykitchen6/put_knife_into_pot/*/raw/traj_group*/traj*')
 traj_group_tk6_task2 = glob.glob(os.environ['DATA'] + '/robonetv2/toykitchen_fixed_cam_targetdomain/berkeley/toykitchen6/take_croissant_out_of_pot/*/raw/traj_group*/traj*')

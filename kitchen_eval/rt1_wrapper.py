@@ -19,6 +19,8 @@ from PIL import Image
 from collections import defaultdict
 from gym.spaces import Box
 
+# import rlds
+
 def stack_observations(observations):
     print('keys', observations[0].keys())
     new_dict = defaultdict(lambda: [])
@@ -104,14 +106,27 @@ class RT1WrapperPolicy():
         
         
         # '''
-        self.base_observation = {
-            'image':
-                np.zeros(shape=(256, 320, 3), dtype=np.uint8),
-            'natural_language_embedding':
-                np.zeros(shape=(512), dtype=np.float32),
-            'natural_language_instruction':
-                np.zeros(shape=(), dtype=str)
-        }
+        # self.base_observation = {
+        #     'image':
+        #         np.zeros(shape=(256, 320, 3), dtype=np.uint8),
+        #     'natural_language_embedding':
+        #         np.zeros(shape=(512), dtype=np.float32),
+        #     'natural_language_instruction':
+        #         np.zeros(shape=(), dtype=str)
+        # }
+        
+        
+        def _zeros_shape(element_shape: tf.TensorShape):
+            if not element_shape:
+                return ()
+            return tuple([1 if dim is None else dim for dim in element_shape])
+
+
+        def zeros_from_spec(spec):
+            return tf.nest.map_structure(
+                lambda t: tf.zeros(_zeros_shape(t.shape), t.dtype), spec)
+        
+        self.base_observation = tf.nest.map_structure(lambda x: zeros_from_spec(x).numpy(),self.tfa_policy.time_step_spec.observation,)
         
         embed = hub.load('https://tfhub.dev/google/universal-sentence-encoder-large/5')
         self.natural_language_embedding = embed([normalize_task_name(task)])[0]
