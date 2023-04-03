@@ -89,7 +89,8 @@ if __name__ == '__main__':
     argparser = argparse.ArgumentParser()
     
     #/home/raid/trainingdata/anikait_exps/03_28_quanevals/xid_54556479/000211960/checkpoint
-    argparser.add_argument('--path', type=str, default='/home/robonetv2/code/rt1_eval/03_28_quanevals/xid_54556479/000211960')
+    # /home/deepthought/interbotix_ws/src/rt1_eval/chkpts/000073080
+    argparser.add_argument('--path', type=str, default='/home/robonetv2/code/rt1_eval/chkpts/000079520')
     #closemicrowave
     # argparser.add_argument('--start_transform', type=str, default='closemicrowave_sampled')
     # argparser.add_argument('--task', type=str, default='closemicrowave')
